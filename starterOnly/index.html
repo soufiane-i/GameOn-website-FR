@@ -71,6 +71,8 @@
                   id="first"
                   name="first"
                   minlength="2"
+                  pattern="^[a-z ,-]+$"
+                  required
                 /><br>
               </div>
               <div
@@ -81,6 +83,7 @@
                   type="text"
                   id="last"
                   name="last"
+                  pattern="^[a-z ,'-]+$"
                 /><br>
               </div>
               <div
@@ -186,9 +189,10 @@
                   type="checkbox"
                   id="checkbox1"
                   checked
+                  required
                 />
-                <label class="checkbox2-label" for="checkbox1" required>
-                  <span class="checkbox-icon" id="checkbox1"></span>
+                <label class="checkbox2-label" for="checkbox1" >
+                  <span class="checkbox-icon" id="checkbox1" ></span>
                   J'ai lu et accepté les conditions d'utilisation.
                 </label>
                 <br>

@@ -10,8 +10,17 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
+const submitBtn = document.querySelectorAll(".btn-submit");
 const modalCrossBtn = document.querySelectorAll(".close");
-const formData = document.querySelectorAll(".formData");
+const textControl = document.querySelectorAll(".text-control");
+
+const prenom = document.getElementById("first");
+const nom = document.getElementById("last");
+const email = document.getElementById("email");
+const date = document.getElementById("birthdate");
+const quantity = document.getElementById("quantity");
+const city = document.getElementById("location1");
+ 
 
 
 // launch modal event
@@ -31,8 +40,50 @@ function quitModal() {
 }
 
 
-                   
-  // /^[a-z ,-]+$/               
+       
+// Check Form
+
+for (let i=0; i<textControl.length; i++ ){
+  textControl[i].setAttribute("required", "");
+}
+
+city.checked = true;
+
+console.log(textControl.length);
+//REGEX
+
+let prenomRegex = /^[a-z ,.'-]{2,}$/i;
+let nomRegex = /^[a-z ,.'-]{2,}$/i;
+let emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+let dateRegex = /^[a-z ,.'-]{2,}$/i;
+let quantityRegex = /^\d{1,2}$/;
+
+
+
+submitBtn.forEach((btn) => btn.addEventListener("click", submitFunct));
+
+
+function submitFunct(e){
+   // empecher la page de se recharger
+  if(prenom.value.match(prenomRegex) 
+  && nom.value.match(nomRegex) 
+  && email.value.match(emailRegex)
+  && quantity.value.match(quantityRegex)){
+    console.log("kokok");
+  } else {
+    e.preventDefault();
+    console.log("non");
+  }    
+
+}
+
+
+
+
+
+
+
+               
 
 
 

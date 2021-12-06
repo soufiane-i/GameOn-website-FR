@@ -71,60 +71,70 @@ submitBtn.forEach((btn) => btn.addEventListener("click", submitFunct));
 //submit function
 function submitFunct(e){
 
-  // test si une entrée correspond à ce qu'on y attend
+ /*if input is : 
+      - valid = don't display error message + check next input 
+      - invalid = don't submit + don't display its error message
+      - valid and it's the last = submit  */
    if(prenomRegex.test(prenom.value) == true){
-    
+    formData[0].dataset.errorVisible = "false";
 
     if (nomRegex.test(nom.value) == true){
-      
+      formData[1].dataset.errorVisible = "false";
 
       if(emailRegex.test(email.value)){
-      
+        formData[2].dataset.errorVisible = "false";
 
       if(date.value){
-        
+        formData[3].dataset.errorVisible = "false";
 
         if(quantityRegex.test(quantity.value)){
-         
+          formData[4].dataset.errorVisible = "false";
 
           if(locations[0].checked == true || locations[1].checked == true || locations[2].checked == true || locations[3].checked == true || locations[4].checked == true || locations[5].checked == true) {
-            
+            formData[5].dataset.errorVisible = "false";
 
             if(conditionsTerms.checked) {
               //submit
               console.log("submit");
             } else {
-              console.log("term pas check")
+              console.log("term pas check");
+              formData[6].dataset.errorVisible = "true";
               e.preventDefault();
             }
           
             } else {
               console.log("location pas bon");
+              formData[5].dataset.errorVisible = "true";
               e.preventDefault();
               
             }
         
           } else {
             console.log("quantity pas bon");
+            formData[4].dataset.errorVisible = "true";
             e.preventDefault();
           }
       
         } else {
           console.log("date pas bon");
+          formData[3].dataset.errorVisible = "true";
           e.preventDefault();
         }
     
       } else {
         console.log("email pas bon");
+        formData[2].dataset.errorVisible = "true";
         e.preventDefault();
       }
       
     }else {
       console.log("nom faux");
+      formData[1].dataset.errorVisible = "true";
       e.preventDefault();
     } 
   } else {
     console.log("prenom faux");
+    formData[0].dataset.errorVisible = "true";
     e.preventDefault();
   }  
   

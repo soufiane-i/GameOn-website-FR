@@ -19,7 +19,6 @@ const nom = document.getElementById("last");
 const email = document.getElementById("email");
 const date = document.getElementById("birthdate");
 const quantity = document.getElementById("quantity");
-const city = document.getElementById("location1");
 const conditionsTerms = document.getElementById("checkbox1");
 const formData = document.querySelectorAll(".formData");
 const locations = document.getElementsByName("location");
@@ -61,29 +60,18 @@ let emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 let dateRegex = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/;
 let quantityRegex = /^\d{1,2}$/;
 
-let regexs = {
-  prenomRegex : /^[a-z-]{2,}$/i,
-  nomRegex : /^[a-z ,.'-]{2,}$/i,
-  emailRegex : /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-  date: date,
 
-}
 
 
 
 // submit event 
 submitBtn.forEach((btn) => btn.addEventListener("click", submitFunct)); 
 
-// Custom error message
-/* prenom.reportValidity("Veuillez entrer 2 caractères ou plus pour le champ du nom.");
-nom.reportValidity("Veuillez entrer 2 caractères ou plus pour le champ du nom.");
-conditionsTerms.reportValidity("Vous devez vérifier que vous acceptez les termes et conditions.");
-date.reportValidity("Vous devez entrer votre date de naissance."); */
 
 //submit function
 function submitFunct(e){
 
-  
+  // test si une entrée correspond à ce qu'on y attend
    if(prenomRegex.test(prenom.value) == true){
     
 
@@ -141,78 +129,6 @@ function submitFunct(e){
   }  
   
 }
-
-// set required attribute to all text control
-
-
-//check one of the radio button. Then one radio button always is check  
-
-
-
-function prenomCheck(){
-  if(prenomRegex.test(prenom.value)){
-    
-    return true;
-} else { return false;
-  
-  
-}
-}
-
-function nomCheck(){
-  if(nomRegex.test(nom.value)){
-    
-    
-  } else {
-  
-  }
-}
-
-function emailCheck(){
-  if(emailRegex.test(email.value)){
-    
-    
-  } else {
-  
-  }
-}
-
-function dateCheck(){
-  if(dateRegex.test(date.value)){
-    
-    
-  } else {
-  
-  }
-}
-
-function quantityCheck(){
-  if(quantityRegex.test(quantity.value)){
-    
-    
-  } else {
-  
-  
-  }
-}
-
-function locationsCheck(){
-  if (locations[0].checked == false && locations[1].checked == false && locations[2].checked == false && locations[3].checked == false && locations[4].checked == false && locations[5].checked == false) {
-    
-  } else  {
-  
-  }
-}
-
-function conditionTermsCheck(){
-  if (conditionsTerms.checked)
-  {
-   
-  } else {
-    
-  }
-}
-
 
 
 //------------------------------------------------------------------------------------------

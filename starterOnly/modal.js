@@ -25,11 +25,13 @@ const locations = document.getElementsByName("location");
 const modalConfirmation = document.querySelector(".modalConfirmation");
 const thanksCloseBtn = document.querySelectorAll(".modalConfirmation-btn-close");
 
+//REGEX
+let prenomRegex = /^[a-z-]{2,}$/i;
+let nomRegex = /^[a-z ,.'-]{2,}$/i;
+let emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+let dateRegex = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/;
+let quantityRegex = /^\d{1,2}$/;
 
-
-
-
- 
 
 
 // launch modal event
@@ -38,9 +40,11 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // quit modal event
 modalCrossBtn.forEach((btn) => btn.addEventListener("click", quitModal));
 
+// validation modal event
 thanksCloseBtn.forEach((btn) => btn.addEventListener("click", quitModal));
 
-
+// form submit event 
+submitBtn.forEach((btn) => btn.addEventListener("click", submitFunct));
 
 // launch modal form function
 function launchModal() {
@@ -53,118 +57,85 @@ function quitModal() {
   modalConfirmation.style.display = "none";
 }
 
-
-
-       
-// Form check ----------------------------------------------------------------
-
-//REGEX
-
-let prenomRegex = /^[a-z-]{2,}$/i;
-let nomRegex = /^[a-z ,.'-]{2,}$/i;
-let emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-let dateRegex = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/;
-let quantityRegex = /^\d{1,2}$/;
-
-
-
-
-
-// submit event 
-submitBtn.forEach((btn) => btn.addEventListener("click", submitFunct));
-
-
-
-
 //submit function
 function submitFunct(e){
 
-
-
  /*if input is : 
-      - valid = don't display error message + check next input 
-      - invalid = don't submit + don't display its error message
-      - valid and it's the last = submit  */
-   if(prenomRegex.test(prenom.value.trim()) == true){
-    formData[0].dataset.errorVisible = "false";
+      - valid(if) = don't display error message + check next input
+      - invalid(else) = don't submit + don't display its error message + don't refresh the page
+      - valid and it's the last = submit + clear form */
 
-    if (nomRegex.test(nom.value.trim()) == true){
+    if(prenomRegex.test(prenom.value.trim())){              // Trim() delete blank space around unnecessary + check if prenom input match with prenom regex
+    formData[0].dataset.errorVisible = "false";             // doesn't active the data-error-visible attribute which display error message  
+
+    if (nomRegex.test(nom.value.trim())){
       formData[1].dataset.errorVisible = "false";
 
       if(emailRegex.test(email.value.trim())){
         formData[2].dataset.errorVisible = "false";
 
-      if(date.value){
+      if(date.value){                                       // if a date is select
         formData[3].dataset.errorVisible = "false";
 
         if(quantityRegex.test(quantity.value.trim())){
           formData[4].dataset.errorVisible = "false";
 
-          if(locations[0].checked == true || locations[1].checked == true || locations[2].checked == true || locations[3].checked == true || locations[4].checked == true || locations[5].checked == true) {
+          if(locations[0].checked || locations[1].checked || locations[2].checked || locations[3].checked || locations[4].checked || locations[5].checked) {    // if one of location radio is check
             formData[5].dataset.errorVisible = "false";
 
-            if(conditionsTerms.checked) {
-              //submit
-              submitClear();
-              e.preventDefault();
+            if(conditionsTerms.checked) {                   // conditionTerms button must be check
+              submitClear();                                // Function which reset the form if it was send
+              modalConfirmation.style.display = "block";    // display confirmation message
+              e.preventDefault();                           // Don't refresh page
             } else {
-              console.log("term pas check");
-              formData[6].dataset.errorVisible = "true";
+              formData[6].dataset.errorVisible = "true";    // display error message
               e.preventDefault();
             }
           
             } else {
-              console.log("location pas bon");
               formData[5].dataset.errorVisible = "true";
               e.preventDefault();
             }
         
           } else {
-            console.log("quantity pas bon");
             formData[4].dataset.errorVisible = "true";
             e.preventDefault();
           }
       
         } else {
-          console.log("date pas bon");
           formData[3].dataset.errorVisible = "true";
           e.preventDefault();
         }
     
       } else {
-        console.log("email pas bon");
         formData[2].dataset.errorVisible = "true";
         e.preventDefault();
       }
       
     }else {
-      console.log("nom faux");
       formData[1].dataset.errorVisible = "true";
       e.preventDefault();
     } 
   } else {
-    console.log("prenom faux");
     formData[0].dataset.errorVisible = "true";
     e.preventDefault();
-  }  
+  }   
   
 }
 
 
-//------------------------------------------------------------------------------------------
 
-
-//
+// function which clear form after submit success
 function submitClear(){
-  formData[6].dataset.errorVisible = "false";
-  modalConfirmation.style.display = "block";
-  for(let i = 0; i<textControl.length; i++){
+  formData[6].dataset.errorVisible = "false"; // delete conditiontTerm error message if it was displayed
+  
+  for(let i = 0; i<textControl.length; i++){  // loop which clear form inputs 
     textControl[i].value = "";
   }
-  for(let i = 0; i<locations.length; i++){
+  for(let i = 0; i<locations.length; i++){  // loop which clear location radios
     locations[i].checked = false;
   }
-  conditionsTerms.checked = false
+  conditionsTerms.checked = false // clear conditionTerms checkbox
 }
 
                
@@ -174,4 +145,6 @@ function submitClear(){
 
 
 
-console.log(prenom.value);
+
+
+

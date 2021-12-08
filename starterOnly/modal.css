@@ -31,7 +31,7 @@ img {
 }
 
 .topnav {
-  overflow: hidden;
+ 
   margin: 3.5%;
 }
 .header-logo {
@@ -86,6 +86,7 @@ img {
     position: absolute;
     right: 0;
     top: 0;
+    color: white;
   }
   .topnav.responsive a {
     float: none;
@@ -99,6 +100,11 @@ img {
   .topnav.responsive .main-navbar
   {
     margin-top: 20px;
+    position: absolute;
+    top: -20px;
+    right: 0;
+    background-color: white;
+    z-index: 2;
   }
 
 }
@@ -496,6 +502,7 @@ footer {
     background: #fff;
     color: #000;
     padding: 20px;
+    min-width: 200px;
   }
   .hero-content::after {
     content: unset;

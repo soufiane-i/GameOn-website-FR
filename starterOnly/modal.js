@@ -29,8 +29,10 @@ const thanksCloseBtn = document.querySelectorAll(".modalConfirmation-btn-close")
 let prenomRegex = /^[a-z-]{2,}$/i;
 let nomRegex = /^[a-z ,.'-]{2,}$/i;
 let emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-let dateRegex = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/;
 let quantityRegex = /^\d{1,2}$/;
+
+// variables
+let formDataArray = [];
 
 
 
@@ -57,69 +59,30 @@ function quitModal() {
   modalConfirmation.style.display = "none";
 }
 
+
+
 //submit function
 function submitFunct(e){
 
- /*if input is : 
-      - valid(if) = don't display error message + check next input
-      - invalid(else) = don't submit + don't display its error message + don't refresh the page
-      - valid and it's the last = submit + clear form */
 
-    if(prenomRegex.test(prenom.value.trim())){              // Trim() delete blank space around unnecessary + check if prenom input match with prenom regex
-    formData[0].dataset.errorVisible = "false";             // doesn't active the data-error-visible attribute which display error message  
+  // Function which display error message
+  firstNameCheck();
+  lastNameCheck();
+  emailCheck();
+  dateCheck();
+  quantityCheck();
+  locationsCheck();
+  termsConditionsCheck();
+  //---------------------------------
 
-    if (nomRegex.test(nom.value.trim())){
-      formData[1].dataset.errorVisible = "false";
+  if (formDataArray.length == formData.length) {               // if number of valid form input are equal to the total number of input form e.g if all input are valid
+    submitClear();                                             // Function which reset the form if it was send
+    validationMessage();                                       // Function which enable validation modal
+  }
 
-      if(emailRegex.test(email.value.trim())){
-        formData[2].dataset.errorVisible = "false";
+  formDataArray = [];                                         // refresh array which count valid input number
+  e.preventDefault();                                         // Don't refresh page
 
-      if(date.value){                                       // if a date is select
-        formData[3].dataset.errorVisible = "false";
-
-        if(quantityRegex.test(quantity.value.trim())){
-          formData[4].dataset.errorVisible = "false";
-
-          if(locations[0].checked || locations[1].checked || locations[2].checked || locations[3].checked || locations[4].checked || locations[5].checked) {    // if one of location radio is check
-            formData[5].dataset.errorVisible = "false";
-
-            if(conditionsTerms.checked) {                   // conditionTerms button must be check
-              submitClear();                                // Function which reset the form if it was send
-              modalConfirmation.style.display = "block";    // display confirmation message
-              e.preventDefault();                           // Don't refresh page
-            } else {
-              formData[6].dataset.errorVisible = "true";    // display error message
-              e.preventDefault();
-            }
-          
-            } else {
-              formData[5].dataset.errorVisible = "true";
-              e.preventDefault();
-            }
-        
-          } else {
-            formData[4].dataset.errorVisible = "true";
-            e.preventDefault();
-          }
-      
-        } else {
-          formData[3].dataset.errorVisible = "true";
-          e.preventDefault();
-        }
-    
-      } else {
-        formData[2].dataset.errorVisible = "true";
-        e.preventDefault();
-      }
-      
-    }else {
-      formData[1].dataset.errorVisible = "true";
-      e.preventDefault();
-    } 
-  } else {
-    formData[0].dataset.errorVisible = "true";
-    e.preventDefault();
-  }   
   
 }
 
@@ -138,6 +101,83 @@ function submitClear(){
   conditionsTerms.checked = false // clear conditionTerms checkbox
 }
 
+
+
+
+function firstNameCheck() {
+  if (prenomRegex.test(prenom.value.trim())) {              // Trim() delete blank space around unnecessary + check if prenom input match with prenom regex
+    formData[0].dataset.errorVisible = "false";             // doesn't active the data-error-visible attribute which display error message
+    formDataArray.push('check');                            // add 'check' in formDataArray array to count how many input forms are valid
+  } else {
+    formData[0].dataset.errorVisible = "true";
+
+  }
+}
+
+function lastNameCheck() {
+  if (nomRegex.test(nom.value.trim())) {
+    formData[1].dataset.errorVisible = "false";
+    formDataArray.push('check');
+  } else {
+    formData[1].dataset.errorVisible = "true";
+
+  }
+}
+
+
+function emailCheck() {
+  if (emailRegex.test(email.value.trim())) {
+    formData[2].dataset.errorVisible = "false";
+    formDataArray.push('check');
+  } else {
+    formData[2].dataset.errorVisible = "true";
+
+  }
+}
+
+function dateCheck() {
+  if (date.value) {                                         // if a date is select
+    formData[3].dataset.errorVisible = "false";
+    formDataArray.push('check');
+  } else {
+    formData[3].dataset.errorVisible = "true";
+
+  }
+}
+
+function quantityCheck() {
+  if (quantityRegex.test(quantity.value.trim())) {
+    formData[4].dataset.errorVisible = "false";
+    formDataArray.push('check');
+  } else {
+    formData[4].dataset.errorVisible = "true";
+
+  }
+}
+
+function locationsCheck() {
+  if(locations[0].checked || locations[1].checked || locations[2].checked || locations[3].checked || locations[4].checked || locations[5].checked) {    // if one of location radio is check {
+    formData[5].dataset.errorVisible = "false";
+    formDataArray.push('check');
+  } else {
+    formData[5].dataset.errorVisible = "true";
+
+  }
+}
+
+function termsConditionsCheck() {
+  if (conditionsTerms.checked) {                      // conditionTerms button must be check
+    formData[6].dataset.errorVisible = "false";
+    formDataArray.push('check');
+  } else {
+    formData[6].dataset.errorVisible = "true";
+
+  }
+}
+
+function validationMessage(){
+  modalConfirmation.style.display = "block";        // display confirmation message
+}
                
 
 

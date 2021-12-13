@@ -27,12 +27,13 @@ p {
 }
 
 img {
-  padding-right: 1rem;
+  padding-right: 0.5rem;
 }
 
 .topnav {
  
   margin: 3.5%;
+
 }
 .header-logo {
     float: left;
@@ -81,6 +82,7 @@ img {
     position: relative;
     display: flex;
     flex-direction: column;
+    height: 57px;
   }
   .topnav.responsive .icon {
     position: absolute;

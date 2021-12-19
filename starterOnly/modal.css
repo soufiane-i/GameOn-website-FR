@@ -33,10 +33,18 @@ img {
 .topnav {
  
   margin: 3.5%;
-
+  
 }
 .header-logo {
     float: left;
+}
+
+@media screen and (max-width:332px) {
+  .topnav {
+    display: flex;
+    margin-top: 10px;
+  }
+  
 }
 .main-navbar {
     float: right;
@@ -513,8 +521,14 @@ footer {
     display: none;
   }
   .hero-headline {
-    font-size: 4.5rem;
+    font-size: 4rem;
     white-space: normal;
+  }
+
+  @media screen and (max-width:360px) {
+    .hero-headline {
+      font-size: 3.5rem;
+    }
   }
   .hero-text {
     width: unset;
